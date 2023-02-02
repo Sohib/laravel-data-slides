@@ -31,13 +31,61 @@ htmlAttrs:
 <div class="text-start">
 
 - Form Request
-- Api Transformer 
+- Api Resource  
 - Typescript Definition 
 
 </div>
-مكتبة البيانات ستقوم باستبدال جميع هذه الاشياء
-
+  مكتبة البيانات ستقوم باستبدال جميع هذه الاشياء
 
 ---
+layout: two-cols
+---
+# إستقبل البيانات و تحقق منها
 
-## طريقة الاستخدام
+
+# Left
+<div dir=ltr>
+
+```php
+    public function update(Organization $organization)
+    {
+        $organization->update(
+            Request::validate([
+                'name' => ['required', 'max:100'],
+                'email' => ['nullable', 'max:50', 'email'],
+                'phone' => ['nullable', 'max:50'],
+            ])
+        );
+
+        return Redirect::back()
+                   ->with('success', 'Organization updated.');
+    }
+```
+</div>
+
+
+::right::
+
+# Right
+
+<div dir=ltr>
+
+```php
+class OrganizationData extends Data
+{
+    public function __construct(
+        //
+        #[Required, Max(100)]
+        public $name,
+        #[Nullable, Max(100),Email]
+        public $email,
+        #[Nullable,Max(50)]
+        public $phone,
+    )
+    {
+    }
+}
+
+```
+</div>
+

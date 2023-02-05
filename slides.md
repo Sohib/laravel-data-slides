@@ -21,29 +21,33 @@ fonts:
 
 title: مكتبة Laravel-data
 htmlAttrs: 
-  dir: rtl
+  dir: auto
   lang: ar
 ---
 
 # مكتبة Laravel-data
+
 ## مكتبة البيانات
-بدأت المكتبة في فريق سباتي بدل اختصار للوقت في احد مشاريعهم حيث كان يحتاجون كل فترة يكتبون 
+
+بدأت المكتبة في فريق سباتي بدل اختصار للوقت في احد مشاريعهم حيث كان يحتاجون كل فترة يكتبون
 <div class="text-start">
 
 - Form Request
 - Api Resource  
-- Typescript Definition 
+- Typescript Definition
 
 </div>
   مكتبة البيانات ستقوم باستبدال جميع هذه الاشياء
 
 ---
+
 layout: two-cols
 ---
-# إستقبل البيانات و تحقق منها
 
+## إستقبل البيانات و تحقق منها
 
-# Left
+### شفرة للتحقق من صحة نموذج
+
 <div dir=ltr>
 
 ```php
@@ -61,12 +65,14 @@ layout: two-cols
                    ->with('success', 'Organization updated.');
     }
 ```
+
 </div>
 
+نقوم بإنشاء الكلاس الخاص  بالنموذج الذي نرغب بالتحقق منه
 
-::right::
-
-# Right
+- we extend Data Object from spait
+- declare our property names matching our form
+- add php 8 attribute (Annoitation )
 
 <div dir=ltr>
 
@@ -87,5 +93,39 @@ class OrganizationData extends Data
 }
 
 ```
+
 </div>
 
+النتيجة كود اقصر بشكل كبير
+
+<div dir=ltr>
+
+```php
+    public function update(Organization $organization,OrganizationData $data)
+    {
+        $organization->update($data);
+        return Redirect::back()
+                   ->with('success', 'Organization updated.');
+    }
+```
+
+</div>
+
+### تمثيل البيانات بواسطة ال Api
+
+
+<div dir=ltr>
+
+```php
+class OrganizationsController extends Controller{
+
+    // ..  
+    // ..
+
+   public function show(Organization $organization){
+        return $organization->getData();
+    }
+}
+```
+
+</div>

@@ -1,6 +1,5 @@
 ---
 theme: default
-background: https://source.unsplash.com/collection/94734566/1920x1080
 class: text-center
 highlighter: shiki
 lineNumbers: false
@@ -40,7 +39,6 @@ htmlAttrs:
   مكتبة البيانات ستقوم باستبدال جميع هذه الاشياء
 
 ---
-
 layout: two-cols
 ---
 
@@ -110,22 +108,54 @@ class OrganizationData extends Data
 ```
 
 </div>
+---
+---
 
-### تمثيل البيانات بواسطة ال Api
-
+### تمثيل البيانات بواسطة لل view 
+سواء REST Api or template engin  
 
 <div dir=ltr>
 
 ```php
-class OrganizationsController extends Controller{
+class OrganizationsController extends Controller {
 
     // ..  
     // ..
 
-   public function show(Organization $organization){
-        return $organization->getData();
+     public function edit(Organization $organization)
+    {
+        return Inertia::render('Organizations/Edit', [
+            'organization' => [
+                'id' => $organization->id,
+                'name' => $organization->name,
+                'email' => $organization->email,
+                'phone' => $organization->phone,
+            ],
+        ]);
     }
 }
 ```
 
 </div>
+
+
+<div dir=ltr>
+
+```php
+class OrganizationsController extends Controller {
+
+    // ..  
+    // ..
+
+     public function edit(Organization $organization)
+    {
+        return Inertia::render('Organizations/Edit', [
+            'organization' =>  OrganizationData::fromModel($organization),
+        ]);
+    }
+}
+```
+
+</div>
+
+ 
